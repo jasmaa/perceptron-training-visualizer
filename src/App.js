@@ -7,7 +7,7 @@ const nData = 50;
 
 export default function App() {
   const [data, setData] = useState(null);
-  const [dataType, setDataType] = useState('linear');
+  const [dataType, setDataType] = useState('circle');
   const [epoch, setEpoch] = useState(0);
   const [planePoints, setPlanePoints] = useState([]);
   const [params, setParams] = useState({ w: [...Array(2)].map(_ => 0), b: 0 }); // assume 2d data
@@ -15,45 +15,24 @@ export default function App() {
   useEffect(() => {
     const newData = generateData(dataType);
     setData(newData);
-    if (chart) {
-      chart.destroy();
-    }
-    createChart(newData, planePoints);
   }, []);
 
   useEffect(() => {
     const newData = generateData(dataType);
+    setEpoch(0);
+    setData(newData);
+    setPlanePoints([]);
     setParams({ w: [...Array(2)].map(_ => 0), b: 0 });
-    if (chart) {
-      chart.destroy();
-    }
-    createChart(newData, planePoints);
   }, [dataType]);
 
-  const generateData = type => {
-    switch (type) {
-      case 'linear':
-        return [...Array(nData)].map((_, i) => {
-          return i > nData / 2
-            ? [[Math.random() - 4, Math.random()], -1]
-            : [[Math.random() + 4, Math.random()], 1]
-        });
-      case 'circle':
-        return [...Array(nData)].map((_, i) => {
-          const theta = 2 * Math.PI * Math.random();
-          return i > nData / 2
-            ? [[Math.cos(theta), Math.sin(theta)], -1]
-            : [[2 * Math.cos(theta), 2 * Math.sin(theta)], 1]
-        });
+  useEffect(() => {
+    if (!data) {
+      return;
     }
-  }
-
-  const createChart = (pointData, separatorData) => {
-    const ctx = document.getElementById("graph");
 
     const negPoints = [];
     const posPoints = [];
-    for (const [x, y] of pointData) {
+    for (const [x, y] of data) {
       switch (y) {
         case -1:
           negPoints.push({ x: x[0], y: x[1] });
@@ -64,6 +43,7 @@ export default function App() {
       }
     }
 
+    const ctx = document.getElementById("graph");
     chart = new Chart(ctx, {
       type: 'scatter',
       data: {
@@ -81,7 +61,7 @@ export default function App() {
         },
         {
           label: 'separator',
-          data: separatorData,
+          data: planePoints,
           borderColor: 'orange',
           borderWidth: 3,
           pointRadius: 0,
@@ -102,6 +82,24 @@ export default function App() {
         }
       }
     });
+  }, [data, planePoints])
+
+  const generateData = type => {
+    switch (type) {
+      case 'linear':
+        return [...Array(nData)].map((_, i) => {
+          return i > nData / 2
+            ? [[Math.random() - 4, Math.random()], -1]
+            : [[Math.random() + 4, Math.random()], 1]
+        });
+      case 'circle':
+        return [...Array(nData)].map((_, i) => {
+          const theta = 2 * Math.PI * Math.random();
+          return i > nData / 2
+            ? [[Math.cos(theta), Math.sin(theta)], -1]
+            : [[2 * Math.cos(theta), 2 * Math.sin(theta)], 1]
+        });
+    }
   }
 
   const update = () => {
@@ -110,7 +108,7 @@ export default function App() {
     setParams({ w, b });
 
     // Build separator
-    let separatorData = []
+    let separatorData = [];
     if (w[1] !== 0) {
       const x2y = x => (-w[0] * x - b) / w[1];
       const xs = data.map(([x, _]) => x[0]);
@@ -127,12 +125,6 @@ export default function App() {
     setPlanePoints(separatorData);
 
     setEpoch(epoch + 1);
-
-    // Create chart
-    if (chart) {
-      chart.destroy();
-    }
-    createChart(data, separatorData);
   }
 
   return (
@@ -140,7 +132,7 @@ export default function App() {
       <h1>A Really Bad Perceptron Training Visualization</h1>
       <pre>Epoch: {epoch}</pre>
       <pre>{JSON.stringify(params, null, 2)}</pre>
-      <select onChange={e => {
+      <select value={dataType} onChange={e => {
         setDataType(e.target.value);
       }}>
         <option value="linear">Linear</option>
