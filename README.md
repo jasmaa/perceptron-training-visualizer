@@ -1,4 +1,8 @@
-# Getting Started with Create React App
+# Perceptron Training Visualizer
+
+![Screensot of visualizer](docs/screenshot.png)
+
+Interactive visualization of the simple perceptron training algorithm.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
