@@ -1,0 +1,6 @@
+.scroll-table {
+  height: 40rem;
+  display: block;
+  overflow-y:scroll;
+  width: 100%;
+}

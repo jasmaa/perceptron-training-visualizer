@@ -1,30 +1,27 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col } from 'reactstrap';
+import { Container, Row, Col, Button } from 'reactstrap';
 import Chart from 'chart.js';
+import PointEntry from './components/PointEntry';
+import DataGenerator from './components/DataGenerator';
 import { trainStep } from './utils/train';
+import { generateData } from './utils/generate';
 
 let chart;
 const nData = 50;
 
 export default function App() {
-  const [data, setData] = useState(null);
-  const [dataType, setDataType] = useState('circle');
+  const [data, setData] = useState([]);
   const [epoch, setEpoch] = useState(0);
   const [planePoints, setPlanePoints] = useState([]);
   const [params, setParams] = useState({ w: [...Array(2)].map(_ => 0), b: 0 }); // assume 2d data
 
-  useEffect(() => {
-    const newData = generateData(dataType);
-    setData(newData);
-  }, []);
-
-  useEffect(() => {
-    const newData = generateData(dataType);
+  const generate = dataType => {
+    const newData = generateData(dataType, nData);
     setEpoch(0);
     setData(newData);
     setPlanePoints([]);
     setParams({ w: [...Array(2)].map(_ => 0), b: 0 });
-  }, [dataType]);
+  }
 
   useEffect(() => {
     if (!data) {
@@ -88,24 +85,6 @@ export default function App() {
     });
   }, [data, planePoints])
 
-  const generateData = type => {
-    switch (type) {
-      case 'linear':
-        return [...Array(nData)].map((_, i) => {
-          return i > nData / 2
-            ? [[Math.random() - 4, Math.random()], -1]
-            : [[Math.random() + 4, Math.random()], 1]
-        });
-      case 'circle':
-        return [...Array(nData)].map((_, i) => {
-          const theta = 2 * Math.PI * Math.random();
-          return i > nData / 2
-            ? [[Math.cos(theta), Math.sin(theta)], -1]
-            : [[2 * Math.cos(theta), 2 * Math.sin(theta)], 1]
-        });
-    }
-  }
-
   const update = () => {
 
     const [w, b] = trainStep(data, [...params.w], params.b);
@@ -133,28 +112,30 @@ export default function App() {
 
   return (
     <Container>
-      <Row>
+      <Row className="my-2">
         <h1>A Really Bad Perceptron Training Visualization</h1>
       </Row>
       <Row>
         <Col>
           <pre>Epoch: {epoch}</pre>
           <pre>{JSON.stringify(params, null, 2)}</pre>
+
+          <div className="d-flex justify-content-center">
+            <div style={{ width: '500px', height: '500px' }}>
+              <canvas id="graph" width="500" height="500"></canvas>
+            </div>
+          </div>
         </Col>
         <Col>
-          <select value={dataType} onChange={e => {
-            setDataType(e.target.value);
-          }}>
-            <option value="linear">Linear</option>
-            <option value="circle">Circle</option>
-          </select>
-          <button onClick={update}>Train</button>
+          <Row className="my-3">
+            <div className="mx-2">
+              <DataGenerator generate={generate} />
+            </div>
+            <Button color="primary" className="mx-2" onClick={update}>Train Step!</Button>
+          </Row>
+
+          <PointEntry data={data} setData={setData} />
         </Col>
-      </Row>
-      <Row className="d-flex justify-content-center">
-        <div style={{ width: '500px', height: '500px' }}>
-          <canvas id="graph" width="500" height="500"></canvas>
-        </div>
       </Row>
     </Container >
   );
