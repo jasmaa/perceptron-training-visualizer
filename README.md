@@ -1,6 +1,6 @@
 # Perceptron Training Visualizer
 
-![Screensot of visualizer](docs/screenshot.png)
+![Screensot of visualizer](screenshot.png)
 
 Interactive visualization of the simple perceptron training algorithm.
 
