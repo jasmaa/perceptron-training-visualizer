@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Table, Button, Input } from 'reactstrap';
+import { Table, Button, Input, InputGroup } from 'reactstrap';
 import style from './style.module.css';
 
 export default function PointEntry({ data, setData }) {
@@ -8,8 +8,13 @@ export default function PointEntry({ data, setData }) {
   const [x2, setX2] = useState(0);
   const [label, setLabel] = useState(-1);
 
+  const convertToInt = v => {
+    v = parseInt(v);
+    return isNaN(v) ? 0 : v;
+  }
+
   const addDataPoint = () => {
-    setData(curr => [...curr, [[parseInt(x1), parseInt(x2)], parseInt(label)]]);
+    setData(curr => [...curr, [[convertToInt(x1), convertToInt(x2)], convertToInt(label)]]);
   }
 
   const addDataPointKey = e => {
@@ -48,7 +53,12 @@ export default function PointEntry({ data, setData }) {
         <tr>
           <td><Input value={x1} onChange={e => setX1(e.target.value)} onKeyPress={addDataPointKey} /></td>
           <td><Input value={x2} onChange={e => setX2(e.target.value)} onKeyPress={addDataPointKey} /></td>
-          <td><Input value={label} onChange={e => setLabel(e.target.value)} onKeyPress={addDataPointKey} /></td>
+          <td>
+            <select value={label} onChange={e => setLabel(e.target.value)} >
+              <option value={1}>+1</option>
+              <option value={-1}>-1</option>
+            </select>
+          </td>
           <td><Button color="success" onClick={addDataPoint}>Add</Button></td>
         </tr>
       </tbody>

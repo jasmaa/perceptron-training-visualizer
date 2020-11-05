@@ -16,7 +16,8 @@ export default function DataGenerator({ generate }) {
       </DropdownToggle>
       <DropdownMenu>
         <DropdownItem onClick={() => generate('linear')}>Linear</DropdownItem>
-        <DropdownItem onClick={() => generate('circle')}> Circle</DropdownItem>
+        <DropdownItem onClick={() => generate('circle')}>Circle</DropdownItem>
+        <DropdownItem onClick={() => generate('random')}>Random</DropdownItem>
       </DropdownMenu>
     </ButtonDropdown>
   );

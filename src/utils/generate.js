@@ -19,6 +19,8 @@ export function generateData(type, nData) {
           ? [[Math.cos(theta), Math.sin(theta)], -1]
           : [[2 * Math.cos(theta), 2 * Math.sin(theta)], 1]
       });
+    case 'random':
+      return [...Array(nData)].map(() => [[Math.random(), Math.random()], Math.random() > 0.5 ? -1 : 1]);
     default:
       return [];
   }

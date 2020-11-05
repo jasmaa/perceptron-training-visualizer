@@ -120,8 +120,8 @@ export default function App() {
 
   return (
     <Container>
-      <Row className="my-2">
-        <h1>A Really Bad Perceptron Training Visualization</h1>
+      <Row className="mb-4">
+        <h1>Simple Perceptron Training Visualization</h1>
       </Row>
       <Row>
         <Col>
@@ -135,16 +135,21 @@ export default function App() {
           </div>
         </Col>
         <Col>
-          <Row className="my-3">
-            <div className="mx-2">
-              <DataGenerator generate={generate} />
-            </div>
-            <Button color="danger" className="mx-2" onClick={() => setData([])}>Clear Data</Button>
-          </Row>
-
-          <Row className="my-3">
-            <Button color="danger" className="mx-2" onClick={() => resetTraining()}>Reset Training</Button>
-            <Button color="primary" className="mx-2" onClick={update}>Train Step!</Button>
+          <Row>
+            <Col>
+              <Row className="my-3">
+                <div className="m-2">
+                  <DataGenerator generate={generate} />
+                </div>
+                <Button color="danger" className="m-2" onClick={() => setData([])}>Clear Data</Button>
+              </Row>
+            </Col>
+            <Col>
+              <Row className="my-3">
+                <Button color="danger" className="m-2" onClick={() => resetTraining()}>Reset Training</Button>
+                <Button color="primary" className="m-2" onClick={update}>Train!</Button>
+              </Row>
+            </Col>
           </Row>
 
           <PointEntry data={data} setData={setData} />
