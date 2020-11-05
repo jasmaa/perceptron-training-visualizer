@@ -8,6 +8,16 @@ export default function PointEntry({ data, setData }) {
   const [x2, setX2] = useState(0);
   const [label, setLabel] = useState(-1);
 
+  const addDataPoint = () => {
+    setData(curr => [...curr, [[parseInt(x1), parseInt(x2)], parseInt(label)]]);
+  }
+
+  const addDataPointKey = e => {
+    if (e.key === 'Enter') {
+      addDataPoint();
+    }
+  }
+
   return (
     <Table className={style['scroll-table']}>
       <thead>
@@ -36,12 +46,10 @@ export default function PointEntry({ data, setData }) {
           ))
         }
         <tr>
-          <td><Input value={x1} onChange={e => setX1(e.target.value)} /></td>
-          <td><Input value={x2} onChange={e => setX2(e.target.value)} /></td>
-          <td><Input value={label} onChange={e => setLabel(e.target.value)} /></td>
-          <td><Button color="success" onClick={() => {
-            setData(curr => [...curr, [[parseInt(x1), parseInt(x2)], parseInt(label)]])
-          }}>Add</Button></td>
+          <td><Input value={x1} onChange={e => setX1(e.target.value)} onKeyPress={addDataPointKey} /></td>
+          <td><Input value={x2} onChange={e => setX2(e.target.value)} onKeyPress={addDataPointKey} /></td>
+          <td><Input value={label} onChange={e => setLabel(e.target.value)} onKeyPress={addDataPointKey} /></td>
+          <td><Button color="success" onClick={addDataPoint}>Add</Button></td>
         </tr>
       </tbody>
     </Table>

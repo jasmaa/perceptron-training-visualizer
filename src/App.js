@@ -10,16 +10,24 @@ let chart;
 const nData = 50;
 
 export default function App() {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState([
+    [[1, 1], 1],
+    [[10, 1], -1],
+    [[1, 10], -1],
+  ]);
   const [epoch, setEpoch] = useState(0);
   const [planePoints, setPlanePoints] = useState([]);
   const [params, setParams] = useState({ w: [...Array(2)].map(_ => 0), b: 0 }); // assume 2d data
 
   const generate = dataType => {
     const newData = generateData(dataType, nData);
-    setEpoch(0);
     setData(newData);
+    resetTraining();
+  }
+
+  const resetTraining = () => {
     setPlanePoints([]);
+    setEpoch(0);
     setParams({ w: [...Array(2)].map(_ => 0), b: 0 });
   }
 
@@ -131,6 +139,11 @@ export default function App() {
             <div className="mx-2">
               <DataGenerator generate={generate} />
             </div>
+            <Button color="danger" className="mx-2" onClick={() => setData([])}>Clear Data</Button>
+          </Row>
+
+          <Row className="my-3">
+            <Button color="danger" className="mx-2" onClick={() => resetTraining()}>Reset Training</Button>
             <Button color="primary" className="mx-2" onClick={update}>Train Step!</Button>
           </Row>
 
