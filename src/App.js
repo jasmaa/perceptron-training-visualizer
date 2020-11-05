@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Container, Row, Col } from 'reactstrap';
 import Chart from 'chart.js';
 import { trainStep } from './utils/train';
 
@@ -44,6 +45,9 @@ export default function App() {
     }
 
     const ctx = document.getElementById("graph");
+    if (chart) {
+      chart.destroy();
+    }
     chart = new Chart(ctx, {
       type: 'scatter',
       data: {
@@ -128,20 +132,30 @@ export default function App() {
   }
 
   return (
-    <div>
-      <h1>A Really Bad Perceptron Training Visualization</h1>
-      <pre>Epoch: {epoch}</pre>
-      <pre>{JSON.stringify(params, null, 2)}</pre>
-      <select value={dataType} onChange={e => {
-        setDataType(e.target.value);
-      }}>
-        <option value="linear">Linear</option>
-        <option value="circle">Circle</option>
-      </select>
-      <button onClick={update}>Train</button>
-      <div style={{ width: '500px', height: '500px' }}>
-        <canvas id="graph" width="500" height="500"></canvas>
-      </div>
-    </div>
+    <Container>
+      <Row>
+        <h1>A Really Bad Perceptron Training Visualization</h1>
+      </Row>
+      <Row>
+        <Col>
+          <pre>Epoch: {epoch}</pre>
+          <pre>{JSON.stringify(params, null, 2)}</pre>
+        </Col>
+        <Col>
+          <select value={dataType} onChange={e => {
+            setDataType(e.target.value);
+          }}>
+            <option value="linear">Linear</option>
+            <option value="circle">Circle</option>
+          </select>
+          <button onClick={update}>Train</button>
+        </Col>
+      </Row>
+      <Row className="d-flex justify-content-center">
+        <div style={{ width: '500px', height: '500px' }}>
+          <canvas id="graph" width="500" height="500"></canvas>
+        </div>
+      </Row>
+    </Container >
   );
 }
