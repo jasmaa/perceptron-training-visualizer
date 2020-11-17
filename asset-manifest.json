@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/perceptron-training-visualizer/static/css/main.eff40474.chunk.css",
+    "main.js": "/perceptron-training-visualizer/static/js/main.8f604ee0.chunk.js",
+    "main.js.map": "/perceptron-training-visualizer/static/js/main.8f604ee0.chunk.js.map",
+    "runtime-main.js": "/perceptron-training-visualizer/static/js/runtime-main.966d0a25.js",
+    "runtime-main.js.map": "/perceptron-training-visualizer/static/js/runtime-main.966d0a25.js.map",
+    "static/css/2.109aacae.chunk.css": "/perceptron-training-visualizer/static/css/2.109aacae.chunk.css",
+    "static/js/2.37294d1b.chunk.js": "/perceptron-training-visualizer/static/js/2.37294d1b.chunk.js",
+    "static/js/2.37294d1b.chunk.js.map": "/perceptron-training-visualizer/static/js/2.37294d1b.chunk.js.map",
+    "static/js/3.682a03ae.chunk.js": "/perceptron-training-visualizer/static/js/3.682a03ae.chunk.js",
+    "static/js/3.682a03ae.chunk.js.map": "/perceptron-training-visualizer/static/js/3.682a03ae.chunk.js.map",
+    "index.html": "/perceptron-training-visualizer/index.html",
+    "static/css/2.109aacae.chunk.css.map": "/perceptron-training-visualizer/static/css/2.109aacae.chunk.css.map",
+    "static/css/main.eff40474.chunk.css.map": "/perceptron-training-visualizer/static/css/main.eff40474.chunk.css.map",
+    "static/js/2.37294d1b.chunk.js.LICENSE.txt": "/perceptron-training-visualizer/static/js/2.37294d1b.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.966d0a25.js",
+    "static/css/2.109aacae.chunk.css",
+    "static/js/2.37294d1b.chunk.js",
+    "static/css/main.eff40474.chunk.css",
+    "static/js/main.8f604ee0.chunk.js"
+  ]
+}
