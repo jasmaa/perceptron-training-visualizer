@@ -19,18 +19,29 @@ export default function App() {
   const [planePoints, setPlanePoints] = useState([]);
   const [params, setParams] = useState({ w: [...Array(2)].map(_ => 0), b: 0 }); // assume 2d data
 
+  /**
+   * Generates new data points based on inputted pattern and resets training
+   * 
+   * @param {*} dataType 
+   */
   const generate = dataType => {
     const newData = generateData(dataType, nData);
     setData(newData);
     resetTraining();
   }
 
+  /**
+   * Resets training
+   */
   const resetTraining = () => {
     setPlanePoints([]);
     setEpoch(0);
     setParams({ w: [...Array(2)].map(_ => 0), b: 0 });
   }
 
+  /**
+   * Updates graph when data points or separator params changed
+   */
   useEffect(() => {
     if (!data) {
       return;
@@ -91,14 +102,18 @@ export default function App() {
         }
       }
     });
-  }, [data, planePoints])
+  }, [data, planePoints]);
 
+  /**
+   * Trains and updates model for 1 epoch
+   */
   const update = () => {
 
+    // Train and get new model params
     const [w, b] = trainStep(data, [...params.w], params.b);
     setParams({ w, b });
 
-    // Build separator
+    // Build new separator
     let separatorData = [];
     if (w[1] !== 0) {
       const x2y = x => (-w[0] * x - b) / w[1];
@@ -115,6 +130,7 @@ export default function App() {
     }
     setPlanePoints(separatorData);
 
+    // Increase epoch
     setEpoch(epoch + 1);
   }
 

@@ -4,6 +4,8 @@
 
 Interactive visualization of the simple perceptron training algorithm.
 
+***
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

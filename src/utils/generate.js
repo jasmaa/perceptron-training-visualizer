@@ -1,5 +1,5 @@
 /**
- * Generate data points
+ * Generate data points from pattern type
  * 
  * @param {String} type Type of data to generate
  * @param {Integer} nData Number of data points

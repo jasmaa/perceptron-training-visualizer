@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 
+/**
+ * Widget for controlling data point generation from template patterns
+ * 
+ * @param {*} param0 
+ */
 export default function DataGenerator({ generate }) {
 
   const [isOpen, setIsOpen] = useState(false);

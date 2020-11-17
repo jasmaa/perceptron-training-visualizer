@@ -1,22 +1,40 @@
 import React, { useState } from 'react';
-import { Table, Button, Input, InputGroup } from 'reactstrap';
+import { Table, Button, Input } from 'reactstrap';
 import style from './style.module.css';
 
+/**
+ * Tablulated data points
+ * 
+ * @param {*} param0 
+ */
 export default function PointEntry({ data, setData }) {
 
   const [x1, setX1] = useState(0);
   const [x2, setX2] = useState(0);
   const [label, setLabel] = useState(-1);
 
+  /**
+   * Converts value to int, returning 0 by default
+   * 
+   * @param {*} v 
+   */
   const convertToInt = v => {
     v = parseInt(v);
     return isNaN(v) ? 0 : v;
   }
 
+  /**
+   * Adds current data point to list of points
+   */
   const addDataPoint = () => {
     setData(curr => [...curr, [[convertToInt(x1), convertToInt(x2)], convertToInt(label)]]);
   }
 
+  /**
+   * Adds data point from key press
+   * 
+   * @param {*} e 
+   */
   const addDataPointKey = e => {
     if (e.key === 'Enter') {
       addDataPoint();
@@ -43,7 +61,6 @@ export default function PointEntry({ data, setData }) {
                 setData(curr => {
                   const newData = [...curr];
                   newData.splice(i, 1);
-                  console.log(newData);
                   return newData;
                 })
               }}>Remove</Button></td>
